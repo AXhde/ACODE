@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szxy.mapper.TeacherMapper">
+
+	<!--查询所有教师 按教师姓名排序-->
+	<select id="findAllTeacher" resultType="Teacher">
+		select * from mis_teacher order by teaName DESC
+	</select>
+
+	<!--根据教师编号查询教师-->
+	<select id="findTeaByTeaNum" parameterType="string" resultType="teacher">
+		select * from mis_teacher where teaNum=#{teaNum}
+	</select>
+
+	<!--添加教师-->
+	<insert id="insertTeacher" parameterType="Teacher">
+		insert into mis_teacher values(mis_teacher_teaId.nextval,#{teaNum},#{teaName},#{teaPhone})
+	</insert>
+
+	<!--根据教师编号删除教师-->
+	<delete id="delTeacherByTeaNum" parameterType="string">
+		delete mis_teacher where teaNum=#{teaNum}
+	</delete>
+
+	<!--根据教师编号修改教师信息-->
+	<update id="updateTeacher" parameterType="Teacher">
+		update mis_teacher set teaName=#{teaName},teaPhone=#{teaPhone} where teaNum=#{teaNum}
+	</update>
+	
+</mapper>

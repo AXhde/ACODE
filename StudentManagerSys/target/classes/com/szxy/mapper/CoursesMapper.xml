@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szxy.mapper.CoursesMapper">
+
+	<!--查询所有课程-->
+	<select id="findAllCoueses" resultType="Courses">
+		select * from mis_courses
+	</select>
+
+	<!--根据couNum查询课程-->
+	<select id="findCouesesByCouNum" parameterType="string" resultType="Courses">
+		select * from mis_courses where couNum=#{couNum}
+	</select>
+
+	<!--添加课程-->
+	<insert id="insertCourse" parameterType="Courses">
+		insert into mis_courses values(mis_courses_couId.nextval,#{couNum},#{couName},#{couhour},#{teaName})
+	</insert>
+
+	<!--修改课程-->
+	<update id="updateCourses" parameterType="Courses">
+		update mis_courses set couName=#{couName},couhour=#{couhour},teaName=#{teaName} where couNum=#{couNum}
+	</update>
+
+	<!--根据课程编号删除课程-->
+	<delete id="delCourseByCouNum" parameterType="string">
+		delete mis_courses where couNum=#{couNum}
+	</delete>
+
+</mapper>

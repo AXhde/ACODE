@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szxy.mapper.StudentMapper">
+
+	<!--学生注册-->
+	<insert id="regStudent" parameterType="student">
+		insert into mis_student values(mis_student_stuid.nextval,#{stuNum},#{stuName},#{stuPsw},#{clsName},#{Sex},#{stuPhone},#{createDate},#{stuAddress},#{stuElse})
+	</insert>
+
+	<!--根据学号修改学生信息-->
+	<update id="updateStuByStuNum" parameterType="student">
+		update mis_student set stuName=#{stuName},stuPsw=#{stuPsw},Sex=#{Sex},stuPhone=#{stuPhone},createDate=#{createDate},stuAddress=#{stuAddress},stuElse=#{stuElse} where stuNum=#{stuNum}
+	</update>
+
+	<!--根据学号查询学生信息-->
+	<select id="findStudentByStuNum" parameterType="string" resultType="Student">
+		select * from mis_student where stuNum=#{stuNum}
+	</select>
+
+	<!--根据stuName查询学生-->
+	<select id="findStudentByStuName" parameterType="string" resultType="Student">
+		select * from mis_student where stuName=#{stuName}
+	</select>
+	
+	<!--根据stuId删除学生-->
+	<delete id="delStudentByStuNum" parameterType="string">
+		delete mis_student where stuNum=#{stuNum}
+	</delete>
+
+	<!--根据学号,姓名,班级名称,入学年份(四位数年份),分页模糊查询学生-->
+	<select id="findStudentByPage" resultType="Student">
+		select core_.* from(
+		select rownum row_,stu.*
+		from mis_student stu
+		<where>
+			<include refid="findByStuNum"/>
+			<include refid="findByStuName"/>
+			<include refid="findByClsName"/>
+			<include refid="findByCreateDate"/>
+			and rownum&lt;=${pageNow}*${pageSize})
+		</where>
+		core_
+		where core_.row_>(${pageNow}-1)*${pageSize}
+	</select>
+
+	<!--查询学生数量-->
+	<select id="countStudent" resultType="int">
+		select count(*) from mis_student
+	</select>
+
+
+	<!--定义SQL片段-->
+	<!--若学号为空-->
+	<sql id="findByStuNum">
+		<if test="stuNum!=null">
+			and stuNum=#{stuNum}
+		</if>
+	</sql>
+
+	<!--若姓名为空-->
+	<sql id="findByStuName">
+		<if test="stuName!=null">
+			and stuName=#{stuName}
+		</if>
+	</sql>
+
+	<!--若班级名为空-->
+	<sql id="findByClsName">
+		<if test="clsName!=null">
+			and clsName=#{clsName}
+		</if>
+	</sql>
+
+	<!--若入学时间为空-->
+	<sql id="findByCreateDate">
+		<if test="createDate!=null">
+			and createDate=#{createDate}
+		</if>
+	</sql>
+
+</mapper>

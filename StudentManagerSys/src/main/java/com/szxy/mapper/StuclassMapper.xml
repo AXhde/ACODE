@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szxy.mapper.StuclassMapper">
+
+	<!--查询所有班级-->
+	<select id="findAllStuClass" resultType="Stuclass">
+		select * from mis_class
+	</select>
+
+	<!--添加班级-->
+	<insert id="insertClass" parameterType="Stuclass">
+		insert into mis_class values(mis_class_clsId.nextval,#{clsNum},#{clsName},#{teaName},#{department})
+	</insert>
+
+	<!--根据班级编号(claName)删除班级-->
+	<delete id="delClassByClsNum" parameterType="string">
+		delete mis_class where clsNum=#{clsNum}
+	</delete>
+
+	<!--根据班级编号(claName)查询班级-->
+	<select id="findClassByClsNum" parameterType="string" resultType="stuclass">
+		select * from mis_class where clsNum=#{clsNum}
+	</select>
+
+	<!--根据班级编号修改班级-->
+	<update id="updateClassByClsNum" parameterType="Stuclass">
+		update mis_class set clsName=#{clsName},teaName=#{teaName},department=#{department} where clsNum=#{clsNum}
+	</update>
+	
+</mapper>

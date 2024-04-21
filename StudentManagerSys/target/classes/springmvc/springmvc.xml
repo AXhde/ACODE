@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.szxy.controller"></context:component-scan>
+
+    <!--启动处理器映射器,处理器适配器-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--配置视图解析器的前缀和后缀-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--后端校验器-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <!--校验器供应商hibernate-validator-->
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+        <property name="validationMessageSource" ref="validatorSource"></property>
+    </bean>
+
+    <!--配置校验器资源文件信息-->
+    <bean id="validatorSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!--配置文件路径-可以不写-->
+        <!--<property name="basename" value="classpath:ValidationMessages"></property>-->
+        <!--配置文件编码-->
+        <property name="fileEncodings" value="utf-8"></property>
+    </bean>
+
+    <!--
+        文件上传对multipart的解析器
+        注意此处的id要求必须是multipartResolver
+      -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>500000000</value>
+        </property>
+    </bean>
+
+</beans>

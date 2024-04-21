@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szxy.mapper.ScoreMapper">
+
+	<!--根据学号查询该学生所有选课,成绩-->
+	<select id="findScoreByStuNum" parameterType="string" resultType="Score">
+		select * from mis_score where stuNum=#{stuNum}
+	</select>
+
+	<!--添加一条选课信息-->
+	<insert id="insertScore" parameterType="score">
+		insert into mis_score values(mis_score_scId.nextval,#{stuNum},#{couName},#{scScore})
+	</insert>
+
+	<!--根据学号,课程号删除一条选课,成绩-->
+	<delete id="delScoreByStuNumcouName">
+		delete mis_score where stuNum=#{stuNum} and couName=#{couName}
+	</delete>
+
+	<!--据学号,删除该学生所有选课,成绩-->
+	<delete id="delAllScoreByStuNum" parameterType="string">
+		delete mis_score where stuNum=#{stuNum}
+	</delete>
+	
+	<!--根据学号,课程名,更新学生成绩-->
+	<update id="updateScoreByStuNumCouName" parameterType="score">
+		update mis_score set scScore=#{scScore} where stuNum=#{stuNum} and couName=#{couName}
+	</update>
+	
+</mapper>

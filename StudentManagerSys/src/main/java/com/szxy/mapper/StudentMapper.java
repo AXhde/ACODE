@@ -1,0 +1,61 @@
+package com.szxy.mapper;
+
+import com.szxy.eneity.Student;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * Created by Mr.z on 2018/4/11 0011.
+ * 学生信息操作
+ */
+public interface StudentMapper {
+
+    /**
+     * 学生注册
+     */
+    void regStudent(Student student);
+
+    /**
+     * 根据学号修改学生信息
+     */
+    void updateStuByStuNum(Student student);
+
+    /**
+     * 根据学号查询学生信息
+     */
+    List<Student> findStudentByStuNum(String stuNum);
+
+    /**
+     * 根据姓名查询学生
+     * 有可能存在同姓名的学生,所以返回结果为集合类型
+     */
+    List<Student> findStudentByStuName(String stuName);
+
+    /**
+     * 根据学号删除学生
+     */
+    void delStudentByStuNum(String stuNum);
+
+    /**
+     * 根据姓名,学号,班级名称,入学年份(四位数年份),分页模糊查询学生
+     * 首次进入此页,默认班级名和入学年份为null
+     * 此时为查询所有学生信息
+     * @param pageNow 查询的当前页
+     * @param pageSize 每页显示条目
+     * @param stuNum 学号
+     * @param stuName 姓名
+     * @param clsName 班级名
+     * @param createDate 入学时间
+     * @return 数据集合
+     */
+    List<Student> findStudentByPage(@Param("pageNow") Integer pageNow , @Param("pageSize") Integer pageSize,
+                                    @Param("stuNum") String stuNum,@Param("stuName") String stuName,
+                                    @Param("clsName") String clsName,@Param("createDate") String createDate);
+
+    /**
+     * 查询学生数量
+     */
+    int countStudent();
+
+}

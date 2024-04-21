@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szxy.mapper.AdminMapper">
+
+	<!-- 根据admNum查询管理员账户 -->
+	<select id="findAdmin" parameterType="string" resultType="Admin">
+		select * from mis_admin where admNum = #{admNum}
+	</select>
+
+	<!--更新管理员,用于修改密码-->
+	<update id="updateAdmin" parameterType="admin">
+		update mis_admin set admPsw=#{admPsw} where admNum = #{admNum}
+	</update>
+
+</mapper>
